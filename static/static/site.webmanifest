@@ -1,6 +1,6 @@
 {
-  "name": "Open WebUI",
-  "short_name": "WebUI",
+  "name": "Workday Chat Partner",
+  "short_name": "WD Chat",
   "icons": [
     {
       "src": "/static/web-app-manifest-192x192.png",

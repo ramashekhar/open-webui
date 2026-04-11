@@ -12,7 +12,7 @@
 	const i18n = getContext('i18n');
 
 	import { WEBUI_NAME, config, mobile, models as _models, settings, user } from '$lib/stores';
-	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
+	import { WEBUI_API_BASE_URL, WEBUI_BASE_URL, getModelImageUrl, getModelImageFallback } from '$lib/constants';
 	import {
 		createNewModel,
 		deleteModelById,
@@ -598,11 +598,11 @@
 												: 'opacity-50 dark:opacity-50'} bg-transparent rounded-2xl"
 										>
 											<img
-												src={`${WEBUI_API_BASE_URL}/models/model/profile/image?id=${model.id}&lang=${$i18n.language}`}
+												src={getModelImageUrl(WEBUI_API_BASE_URL, model.id, $i18n.language)}
 												alt="modelfile profile"
-												class=" rounded-2xl size-12 object-cover"
+												class=" size-12 object-contain"
 												on:error={(e) => {
-													e.target.src = '/favicon.png';
+													e.target.src = getModelImageFallback();
 												}}
 											/>
 										</div>

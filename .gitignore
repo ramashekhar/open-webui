@@ -310,3 +310,8 @@ dist
 cypress/videos
 cypress/screenshots
 .vscode/settings.json
+
+tmp
+.webui*key
+backend/open_webui/frontend
+static/favicon copy.png

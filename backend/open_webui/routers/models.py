@@ -376,7 +376,7 @@ async def get_model_by_id(id: str, user=Depends(get_verified_user), db: Session 
 
 
 @router.get('/model/profile/image')
-def get_model_profile_image(id: str, user=Depends(get_verified_user)):
+def get_model_profile_image(id: str, theme: str = 'light', user=Depends(get_verified_user)):
     model = Models.get_model_by_id(id)
 
     if model:
@@ -407,9 +407,11 @@ def get_model_profile_image(id: str, user=Depends(get_verified_user)):
                 except Exception as e:
                     pass
 
-        return FileResponse(f'{STATIC_DIR}/favicon.png')
+        favicon = 'favicon-dark.png' if theme == 'dark' else 'favicon.png'
+        return FileResponse(f'{STATIC_DIR}/{favicon}')
     else:
-        return FileResponse(f'{STATIC_DIR}/favicon.png')
+        favicon = 'favicon-dark.png' if theme == 'dark' else 'favicon.png'
+        return FileResponse(f'{STATIC_DIR}/{favicon}')
 
 
 ############################

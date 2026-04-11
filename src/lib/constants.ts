@@ -1,7 +1,7 @@
 import { browser, dev } from '$app/environment';
 // import { version } from '../../package.json';
 
-export const APP_NAME = 'Open WebUI';
+export const APP_NAME = 'Workday Chat Partner';
 
 export const WEBUI_HOSTNAME = browser ? (dev ? `${location.hostname}:8080` : ``) : '';
 export const WEBUI_BASE_URL = browser ? (dev ? `http://${WEBUI_HOSTNAME}` : ``) : ``;
@@ -111,6 +111,17 @@ export const DEFAULT_CAPABILITIES = {
 };
 
 export const PASTED_TEXT_CHARACTER_LIMIT = 1000;
+
+export function getModelImageUrl(baseUrl: string, id: string, lang: string = ''): string {
+	const isDark = browser && document.documentElement.classList.contains('dark');
+	const theme = isDark ? 'dark' : 'light';
+	return `${baseUrl}/models/model/profile/image?id=${id}&lang=${lang}&theme=${theme}`;
+}
+
+export function getModelImageFallback(): string {
+	const isDark = browser && document.documentElement.classList.contains('dark');
+	return isDark ? '/static/favicon-dark.png' : '/favicon.png';
+}
 
 // Source: https://kit.svelte.dev/docs/modules#$env-static-public
 // This feature, akin to $env/static/private, exclusively incorporates environment variables
