@@ -2,9 +2,34 @@
 
 ## 2026-04-12 — Career profile artifact panel customisations
 
+### Preview Card pill — light-mode colour fix + hint text polish
+
+Updated the "Preview Card" pill button rendered in place of HTML code blocks:
+- Light mode: pill now uses `bg-blue-50 / border-blue-200 / text-blue-700` for clear readability (was white-on-white, invisible)
+- Dark mode: unchanged (`bg-black / border-white/10 / text-white`)
+- Hint text updated: "Click to view full details" (was "Click to view full career profile")
+- Hint text size bumped to `text-sm`; `←` arrow replaced with `👈` emoji
+
+| File | Change |
+|---|---|
+| `src/lib/components/chat/Messages/CodeBlock.svelte` | Pill colours, hint text copy, text size, arrow → emoji |
+
+### HTML code blocks replaced globally with Preview Card
+
+All `html` fenced code blocks in assistant responses are now replaced with a "Preview Card" pill button (+ hint text) instead of showing raw HTML. Clicking opens the artifact panel. Behaviour is global — applies to any HTML block, not just career profiles.
+
+Supersedes the earlier auto-collapse approach. Old `collapsed` logic for `html`/`svg` langs removed from `MarkdownTokens.svelte`.
+
+| File | Change |
+|---|---|
+| `src/lib/components/chat/Messages/CodeBlock.svelte` | Added `{:else if preview && lang === 'html'}` branch rendering pill + hint; imported `Eye` icon |
+| `src/lib/components/chat/Messages/Markdown/MarkdownTokens.svelte` | Removed html/svg auto-collapse override; simplified `collapsed` prop to `$settings?.collapseCodeBlocks ?? false` |
+
 ### Artifact panel — auto-collapse HTML code blocks
 
-HTML/SVG code blocks now auto-collapsed when `detectArtifacts` is enabled, so users don't see raw HTML in chat.
+~~HTML/SVG code blocks now auto-collapsed when `detectArtifacts` is enabled, so users don't see raw HTML in chat.~~
+
+Superseded by the Preview Card approach above.
 
 | File | Change |
 |---|---|

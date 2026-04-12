@@ -268,6 +268,13 @@
 		pane.resize(Math.max(50, minSize));
 	}
 
+	// Reactively open the pane whenever showControls becomes true after mount.
+	// The init() call only runs once, so programmatic showControls.set(true) calls
+	// (e.g. from ContentRenderer auto-open) would otherwise be ignored.
+	$: if ($showControls && pane && paneReady) {
+		openPane();
+	}
+
 	// Helper: is a "special" full-screen panel active?
 	$: specialPanel = $showCallOverlay || $showArtifacts || $showEmbeds;
 </script>

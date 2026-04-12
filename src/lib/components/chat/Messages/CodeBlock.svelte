@@ -22,6 +22,7 @@
 	import ChevronUpDown from '$lib/components/icons/ChevronUpDown.svelte';
 	import CommandLine from '$lib/components/icons/CommandLine.svelte';
 	import Cube from '$lib/components/icons/Cube.svelte';
+	import Eye from '$lib/components/icons/Eye.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 
 	const i18n = getContext('i18n');
@@ -467,6 +468,19 @@
 					<pre>{code}</pre>
 				</div>
 			{/if}
+		{:else if preview && lang === 'html'}
+			<div class="px-3 py-2 flex items-center gap-3">
+				<button
+					class="flex gap-1.5 items-center text-xs transition rounded-lg px-3 py-1.5 bg-blue-50 dark:bg-black border border-blue-200 dark:border-white/10 text-blue-700 dark:text-white hover:bg-blue-100 dark:hover:bg-gray-900 shrink-0"
+					on:click={previewCode}
+				>
+					<Eye className="size-3.5" />
+					{$i18n.t('Preview Card')}
+				</button>
+				<span class="text-sm text-gray-400 dark:text-gray-500 flex items-center gap-1">
+					👈 {$i18n.t('Click to view full details')}
+				</span>
+			</div>
 		{:else}
 			<div
 				class="sticky {stickyButtonsClassName} left-0 right-0 py-1.5 px-3 gap-2 flex items-center justify-end w-full z-10 text-xs text-black dark:text-white bg-white dark:bg-black rounded-t-2xl"
