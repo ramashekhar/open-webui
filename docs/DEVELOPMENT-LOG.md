@@ -1,5 +1,37 @@
 # Development Log
 
+## 2026-04-12 — Career profile artifact panel customisations
+
+### Artifact panel — auto-collapse HTML code blocks
+
+HTML/SVG code blocks now auto-collapsed when `detectArtifacts` is enabled, so users don't see raw HTML in chat.
+
+| File | Change |
+|---|---|
+| `src/lib/components/chat/Messages/Markdown/MarkdownTokens.svelte` | `collapsed` prop on `<CodeBlock>`: returns `true` when `lang` is `html`/`svg` and `detectArtifacts` is on, instead of always using `collapseCodeBlocks` setting |
+
+### Artifact panel — auto-open when HTML block detected
+
+Added a reactive statement to auto-open the artifact side panel whenever a completed message contains a ` ```html ` block, without requiring the user to click Preview.
+
+| File | Change |
+|---|---|
+| `src/lib/components/chat/Messages/ContentRenderer.svelte` | Added `$: if (done && content && detectArtifacts && !mobile && chatId)` reactive — calls `showArtifacts.set(true)` + `showControls.set(true)` when content matches ` ```(html\|svg) ` |
+
+**Status:** Auto-open reactive added but not yet confirmed working end-to-end — further debugging needed (see pending issues).
+
+### Artifact panel — fixed width when artifacts open
+
+Artifact panel now opens at a fixed percentage width regardless of the user's saved `localStorage.chatControlsSize`, so the profile card renders without needing to drag.
+
+| File | Change |
+|---|---|
+| `src/lib/components/chat/ChatControls.svelte` | `openPane()`: checks `$showArtifacts` first, resizes to `Math.max(50, minSize)` before falling back to localStorage. Added `$: if ($showArtifacts && pane && paneReady)` reactive for the same resize. Both `minSize` calculations updated from `350px` → `550px` baseline. |
+
+**Pending:** Width target is 60% — currently at 50%, needs one more bump + rebuild.
+
+---
+
 ## 2026-04-11
 
 ### Branding — Renamed "Open WebUI" → "Workday Chat Partner"

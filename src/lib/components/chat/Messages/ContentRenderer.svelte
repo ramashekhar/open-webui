@@ -140,6 +140,17 @@
 		}
 	};
 
+	// Auto-open artifact panel when message is done and contains an html/svg block.
+	// More reliable than onUpdate which can miss when showControls is already false.
+	$: if (done && content && ($settings?.detectArtifacts ?? true) && !$mobile && $chatId) {
+		if (/```(html|svg)[\s\S]/i.test(content)) {
+			tick().then(() => {
+				showArtifacts.set(true);
+				showControls.set(true);
+			});
+		}
+	}
+
 	onMount(() => {
 		if (floatingButtons) {
 			contentContainerElement?.addEventListener('mouseup', updateButtonPosition);

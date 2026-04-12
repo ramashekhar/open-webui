@@ -146,6 +146,11 @@
 	};
 
 	export const openPane = () => {
+		// Artifact panel always opens at 40% regardless of saved size
+		if ($showArtifacts) {
+			pane.resize(Math.max(50, minSize));
+			return;
+		}
 		if (parseInt(localStorage?.chatControlsSize)) {
 			const container = document.getElementById('chat-container');
 			let size = Math.floor(
@@ -209,7 +214,7 @@
 			const container = document.getElementById('chat-container') as HTMLElement;
 			if (!container) return;
 
-			minSize = Math.floor((350 / container.clientWidth) * 100);
+			minSize = Math.floor((550 / container.clientWidth) * 100);
 			resizeObserver = new ResizeObserver((entries) => {
 				for (let entry of entries) {
 					const width = entry.contentRect.width;
@@ -256,6 +261,12 @@
 	};
 
 	$: if (paneReady && !chatId) closeHandler();
+
+	// When artifact panel opens, resize to 40% of container width regardless
+	// of the saved chatControlsSize, so the profile card renders without needing to drag.
+	$: if ($showArtifacts && pane && paneReady) {
+		pane.resize(Math.max(50, minSize));
+	}
 
 	// Helper: is a "special" full-screen panel active?
 	$: specialPanel = $showCallOverlay || $showArtifacts || $showEmbeds;

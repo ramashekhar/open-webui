@@ -155,7 +155,11 @@
 		{#if token.raw.includes('```')}
 			<CodeBlock
 				id={`${id}-${tokenIdx}`}
-				collapsed={$settings?.collapseCodeBlocks ?? false}
+				collapsed={
+				(['html', 'svg'].includes(token?.lang ?? '') && ($settings?.detectArtifacts ?? true))
+					? true
+					: ($settings?.collapseCodeBlocks ?? false)
+			}
 				{token}
 				lang={token?.lang ?? ''}
 				code={token?.text ?? ''}
