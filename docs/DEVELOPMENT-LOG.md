@@ -33,6 +33,22 @@ Removed or hidden upstream Open WebUI branding that surfaced in the UI:
 
 **Build note:** Frontend build requires ~6GB free RAM. Stop NiFi (`/home/admin/nifi-2.8.0`) before building if memory is tight. Build must be run in terminal — agent-spawned builds get OOM-killed.
 
+## 2026-04-26 — Login page redesign
+
+Replaced the plain login page with a branded card-style layout matching the Workday Co-Partner design.
+
+- White card with rounded corners and drop shadow on a warm beige (`#f5f0e8`) background
+- Logo (`/static/favicon-dark.png`) + "Workday Co-Partner" title in Playfair Display 28px + subtitle "Your Partner who gets things done."
+- "Sign in to Admin Console" secondary heading replacing the generic i18n title
+- Uppercase tracked labels (EMAIL, PASSWORD), bordered input fields with tan focus ring
+- Tan/gold CTA button (`#c9b99a`) replacing the grey pill
+- "Secure access · Workday Co-Partner" footer with lock icon
+
+| File | Change |
+|---|---|
+| `src/routes/auth/+page.svelte` | Full card layout, logo, labels, inputs, button, footer |
+| `src/app.html` | Added Playfair Display Google Fonts preconnect + stylesheet |
+
 ## 2026-04-12 — Career profile artifact panel customisations
 
 ### Preview Card pill — light-mode colour fix + hint text polish
