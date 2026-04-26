@@ -288,10 +288,10 @@
 					} else {
 						return e.name;
 					}
-				}, '')} • Workday Chat Partner</title
+				}, '')} • Workday Co-Partner</title
 		>
 	{:else}
-		<title>#{channel?.name ?? 'Channel'} • Workday Chat Partner</title>
+		<title>#{channel?.name ?? 'Channel'} • Workday Co-Partner</title>
 	{/if}
 </svelte:head>
 

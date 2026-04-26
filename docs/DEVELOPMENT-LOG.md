@@ -1,5 +1,38 @@
 # Development Log
 
+## 2026-04-26 — Rebrand to "Workday Co-Partner" + branding cleanup
+
+### Rename: "Workday Chat Partner" → "Workday Co-Partner"
+
+Updated all brand name occurrences across frontend source, backend config, static assets, and systemd service files.
+
+**Files changed:**
+
+| File | Change |
+|---|---|
+| `src/lib/constants.ts` | `APP_NAME` → `'Workday Co-Partner'` |
+| `src/app.html` | `<title>` updated |
+| `src/routes/+layout.svelte` | Browser notification title strings (2) updated |
+| `src/lib/components/channel/Channel.svelte` | `<title>` strings (2) updated |
+| `src/lib/i18n/locales/en-US/translation.json` | 3 translated display strings updated |
+| `static/static/site.webmanifest` | `"name"` field updated |
+| `static/opensearch.xml` | `<ShortName>` and `<Description>` updated |
+| `backend/open_webui/env.py` | `WEBUI_NAME` default → `'Workday Co-Partner'` |
+| `backend/open_webui/static/site.webmanifest` | `"name"` field updated |
+| `/etc/systemd/system/adchat.service` | `Environment="WEBUI_NAME=..."` updated (hardcoded override — not in repo) |
+
+### Branding cleanup — suppress residual "Open WebUI" references
+
+Removed or hidden upstream Open WebUI branding that surfaced in the UI:
+
+- `src/lib/components/chat/Settings/About.svelte` — removed Discord/Twitter/GitHub social badges and "Open WebUI Inc." copyright line
+- `src/lib/components/admin/Users/UserList.svelte` — removed enterprise sponsorship promo banner (shown to admins with 50+ users)
+- `src/lib/components/chat/Suggestions.svelte` — version string (`{WEBUI_NAME} ‧ vX.Y`) now hidden when user is typing with no matches (was showing as empty/stale state in typeahead); only shown on landing when input is empty
+
+**Root cause of login flash:** `adchat.service` had `WEBUI_NAME` hardcoded at service level, overriding `env.py`. `wdchat.service` has no override and inherits the default correctly.
+
+**Build note:** Frontend build requires ~6GB free RAM. Stop NiFi (`/home/admin/nifi-2.8.0`) before building if memory is tight. Build must be run in terminal — agent-spawned builds get OOM-killed.
+
 ## 2026-04-12 — Career profile artifact panel customisations
 
 ### Preview Card pill — light-mode colour fix + hint text polish

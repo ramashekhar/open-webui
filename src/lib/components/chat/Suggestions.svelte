@@ -68,9 +68,7 @@
 	{#if filteredPrompts.length > 0}
 		<Bolt />
 		{$i18n.t('Suggested')}
-	{:else}
-		<!-- Keine Vorschläge -->
-
+	{:else if !inputValue.trim()}
 		<div
 			class="flex w-full {$settings?.landingPageMode === 'chat'
 				? ' -mt-1'
