@@ -111,7 +111,7 @@
 		<!-- Tool call display -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div
-			class="{buttonClassName} cursor-pointer"
+			class="{buttonClassName} cursor-pointer {isDone ? 'hidden' : ''}"
 			on:pointerup={() => {
 				open = !open;
 			}}
@@ -161,17 +161,21 @@
 				</div>
 
 				<!-- Chevron -->
-				<div class="flex shrink-0 self-center translate-y-[1px]">
-					{#if open}
-						<ChevronUp strokeWidth="3.5" className="size-3.5" />
-					{:else}
-						<ChevronDown strokeWidth="3.5" className="size-3.5" />
-					{/if}
-				</div>
+				<!-- REVERT: change {#if false} below back to {#if true} to restore expand/collapse chevron -->
+				{#if false}
+					<div class="flex shrink-0 self-center translate-y-[1px]">
+						{#if open}
+							<ChevronUp strokeWidth="3.5" className="size-3.5" />
+						{:else}
+							<ChevronDown strokeWidth="3.5" className="size-3.5" />
+						{/if}
+					</div>
+				{/if}
 			</div>
 		</div>
 
-		{#if open}
+		<!-- REVERT: change {#if false} below back to {#if open && !isDone} to restore expandable input/output panel -->
+		{#if false}
 			<div transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}>
 				<div class="border border-gray-50 dark:border-gray-850/30 rounded-2xl my-1.5 p-3 space-y-3">
 					<!-- Input -->

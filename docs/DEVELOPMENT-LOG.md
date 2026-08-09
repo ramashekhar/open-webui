@@ -1,5 +1,13 @@
 # Development Log
 
+## 2026-05-27 — Architecture knowledge base
+
+Started `docs/architecture/` as an incremental codebase knowledge cache. Goal: avoid re-reading source files every session. Each subsystem file contains key files with line refs, data flow, and non-obvious gotchas. `docs/ARCHITECTURE.md` is the index — read it first before any source exploration.
+
+Current entries: follow-up prompts, MCP tools, notifications, tool call display, custom dialog (planned).
+
+
+
 ## 2026-04-26 — Rebrand to "Workday Co-Partner" + branding cleanup
 
 ### Rename: "Workday Chat Partner" → "Workday Co-Partner"
@@ -176,3 +184,20 @@ Resolved three dark-mode icon issues identified via screenshots:
 **Build:** Frontend rebuilt (`npm run build`) after changes. Services pending restart (`sudo systemctl restart wdchat.service adchat.service`).
 
 **Verified working (SSO):** Workday SSO flow confirmed end-to-end on `wdchat.aipoc.dev` — login, callback, session, OWU auto-login all functional.
+
+### Tool call status pill hidden — "View Result from ..." inline UI
+
+Inline pill (`✓ View Result from workday_get_career_profile`) shown mid-response for native function calling. Comes from `ToolCallDisplay.svelte`, rendered by `MarkdownTokens.svelte` when parsing `<details type="tool_calls">` blocks emitted during Native mode function calling (per-model Advanced Params > Function Calling: Native vs Default).
+
+Final behavior: show "Executing **name**..." + spinner while tool runs, whole widget (row + expand chevron + input/output panel) disappears once done — no persistent "View Result from" pill, no clickable expand/collapse.
+
+**File modified:** `src/lib/components/common/ToolCallDisplay.svelte`, all changes commented/guarded (not deleted) for easy revert:
+- Header row class (~line 114): `class="{buttonClassName} cursor-pointer {isDone ? 'hidden' : ''}"` — row hides once `isDone` is true, visible while executing.
+- Chevron block (~line 163-172): wrapped in `{#if false}` with a `REVERT:` comment above it (`{#if true}` restores).
+- Expandable input/output panel (~line 174): condition changed from `{#if open && !isDone}` to `{#if false}` with a `REVERT:` comment above it (swap back to `{#if open && !isDone}` restores).
+
+**To fully revert:** find the two `REVERT:` comments in the file and swap `{#if false}` back to the value noted; also drop the `isDone ? 'hidden' : ''` back to plain `cursor-pointer` on the header div.
+
+**Not touched:** Function Calling mode itself (Native/Default) unaffected — pure display change. File/image outputs attached to a tool call still render (they live outside this block).
+
+**Build:** `NODE_OPTIONS="--max-old-space-size=4096" npm run build` completed clean (exit 0, only preexisting unrelated a11y/self-closing-tag warnings). Service restart still needed to pick up in deployed env.
