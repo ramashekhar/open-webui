@@ -237,7 +237,7 @@
 					<div class="my-auto flex flex-col justify-center items-center">
 						<div class="bg-white rounded-2xl shadow-lg px-10 py-10 sm:max-w-md my-auto w-full dark:text-gray-100 dark:bg-gray-900">
 							<div class="flex flex-col items-center mb-6">
-								<img src="/static/favicon-dark.png" alt="Workday Co-Partner" class="w-16 h-16 mb-3" />
+								<img src="/static/favicon-dark.png" alt="Workday Co-Partner" class="h-16 mb-3" />
 								<h1 class="text-[28px] font-bold text-gray-900 dark:text-gray-100" style="font-family: 'Playfair Display', serif;">Workday Co-Partner</h1>
 								<p class="text-sm text-gray-400 mt-1">Your Partner who gets things done.</p>
 								<hr class="w-full mt-4 border-gray-200 dark:border-gray-700" />
